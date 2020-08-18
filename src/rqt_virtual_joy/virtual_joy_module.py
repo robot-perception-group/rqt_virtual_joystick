@@ -10,14 +10,14 @@ from python_qt_binding.QtGui import QCursor
 from python_qt_binding import QtCore
 
 
-class MyPlugin(Plugin):
+class virtualJoyPlugin(Plugin):
 
     def __init__(self, context):
 
-        super(MyPlugin, self).__init__(context)
+        super(virtualJoyPlugin, self).__init__(context)
 
         # Give QObjects reasonable names
-        self.setObjectName('MyPlugin')
+        self.setObjectName('virtualJoyPlugin')
 
         # Process standalone plugin command-line arguments
         from argparse import ArgumentParser
@@ -45,8 +45,8 @@ class MyPlugin(Plugin):
 
         args, unknowns = parser.parse_known_args(context.argv())
         if not args.quiet:
-            print 'arguments: ', args
-            print 'unknowns: ', unknowns
+            print('arguments: ', args)
+            print('unknowns: ', unknowns)
 
         # Create QWidget
         self._widget = QWidget()
@@ -55,11 +55,11 @@ class MyPlugin(Plugin):
         # Extend the widget with all attributes and children from UI file
         loadUi(ui_file, self._widget)
         # Give QObjects reasonable names
-        self._widget.setObjectName('MyPluginUi')
-        # Show _widget.windowTitle on left-top of each plugin (when 
-        # it's set in _widget). This is useful when you open multiple 
-        # plugins at once. Also if you open multiple instances of your 
-        # plugin at once, these lines add number to make it easy to 
+        self._widget.setObjectName('virtualJoyPluginUi')
+        # Show _widget.windowTitle on left-top of each plugin (when
+        # it's set in _widget). This is useful when you open multiple
+        # plugins at once. Also if you open multiple instances of your
+        # plugin at once, these lines add number to make it easy to
         # tell from pane to pane.
         if context.serial_number() > 1:
             self._widget.setWindowTitle(self._widget.windowTitle() + (' (%d)' % context.serial_number()))
@@ -106,7 +106,7 @@ class MyPlugin(Plugin):
         except:
             self._timer = QtCore.QTimer(self)
             self._timer.timeout.connect(self.processTimerShot)
-        
+
         if msec > 0:
             self._timer.setInterval(msec)
             self._timer.start()
@@ -117,7 +117,7 @@ class MyPlugin(Plugin):
 
     def publishRateSpinBoxChanged(self,status):
         self.updateROSPublishState()
-        
+
     def updateROSPublishState(self):
 
         if self._widget.publishCheckBox.checkState() == QtCore.Qt.Checked:
@@ -126,7 +126,7 @@ class MyPlugin(Plugin):
         else:
             self.startIntervalTimer(-1)  # Stop Timer (Stop Publish)
 
-    
+
     def indexChanged(self,index):
         text = str(self._widget.shapeSelectBox.currentText())
         self._widget.joy.setMode(str(text))
