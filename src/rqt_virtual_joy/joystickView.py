@@ -149,7 +149,7 @@ class JoystickPointView(QWidget):
 
     def mouseReleaseEvent(self, event):
         
-        self._moveJoy(QtCore.QPoint(0,0))
+        #self._moveJoy(QtCore.QPoint(0,0))
         
         if self.__mousePressPos is not None:
             moved = event.globalPos() - self.__mousePressPos 
